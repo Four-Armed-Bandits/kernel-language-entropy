@@ -1,0 +1,5 @@
+[default]
+entity = arush-up
+project = semantic_uncertainty
+base_url = https://api.wandb.ai
+
