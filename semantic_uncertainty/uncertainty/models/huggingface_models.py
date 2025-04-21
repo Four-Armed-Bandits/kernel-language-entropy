@@ -17,7 +17,7 @@ from huggingface_hub import snapshot_download
 
 from uncertainty.models.base_model import BaseModel
 from uncertainty.models.base_model import STOP_SEQUENCES
-
+DEVICE = 'cuda'
 
 class StoppingCriteriaSub(StoppingCriteria):
     """Stop generations when they match a particular text or token."""
@@ -200,7 +200,7 @@ class HuggingfaceModel(BaseModel):
     def predict(self, input_data, temperature, return_full=False):
 
         # Implement prediction.
-        inputs = self.tokenizer(input_data, return_tensors="pt").to("mps")
+        inputs = self.tokenizer(input_data, return_tensors="pt").to(DEVICE)
 
         if 'llama' in self.model_name.lower() or 'falcon' in self.model_name or 'mistral' in self.model_name.lower():
             if 'token_type_ids' in inputs:  # Some HF models have changed.
@@ -367,7 +367,7 @@ class HuggingfaceModel(BaseModel):
         """Get the probability of the model anwering A (True) for the given input."""
 
         input_data += ' A'
-        tokenized_prompt_true = self.tokenizer(input_data, return_tensors='pt').to('mps')['input_ids']
+        tokenized_prompt_true = self.tokenizer(input_data, return_tensors='pt').to(DEVICE)['input_ids']
         # The computation of the negative log likelihoods follows:
         # https://huggingface.co/docs/transformers/perplexity.
 
