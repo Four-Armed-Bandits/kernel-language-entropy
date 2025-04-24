@@ -1,0 +1,1 @@
+{"validation_accuracy":0.2,"_timestamp":1.7454130816971743e+09,"train_accuracy":0.2,"converged":true,"acc_p_ik_train_train":1,"_wandb":{"runtime":61},"_step":5,"acc_p_ik_eval":0.8,"auroc_p_ik_train_train":1,"n_iter":16,"acc_p_ik_train_test":1,"model":"Llama-3.2-1B","auroc_p_ik_train_test":NaN,"dataset":"svamp","auroc_p_ik_eval":0.25,"len_p_true":19,"_runtime":60.576162299}
