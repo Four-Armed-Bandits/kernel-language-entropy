@@ -288,7 +288,7 @@ def get_reference(example):
 
 def init_model(args):
     mn = args.model_name
-    if 'llama' in mn.lower() or 'falcon' in mn or 'mistral' in mn.lower():
+    if 'llama' in mn.lower() or 'falcon' in mn or 'mistral' or 'deepseek' or 'gemma' in mn.lower():
         model = HuggingfaceModel(
             mn, stop_sequences='default',
             max_new_tokens=args.model_max_new_tokens)

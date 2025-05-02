@@ -190,6 +190,65 @@ class HuggingfaceModel(BaseModel):
                 device_map='auto',
                 **kwargs,
             )
+        elif 'deepseek' in model_name.lower():
+            # Support for DeepSeek-R1 and variants
+            if model_name.endswith('-8bit'):
+                kwargs = {'quantization_config': BitsAndBytesConfig(load_in_8bit=True)}
+                model_name = model_name[:-len('-8bit')]
+            elif model_name.endswith('-4bit'):
+                kwargs = {'quantization_config': BitsAndBytesConfig(load_in_4bit=True)}
+                model_name = model_name[:-len('-4bit')]
+            else:
+                kwargs = {}
+
+            # DeepSeek-R1 models are hosted under 'deepseek-ai' on Hugging Face Hub
+            if 'r1' in model_name.lower():
+                model_id = f'deepseek-ai/{model_name}'
+            else:
+                raise ValueError(f"Unknown DeepSeek model: {model_name}")
+
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                model_id, device_map='auto', token_type_ids=None, clean_up_tokenization_spaces=False
+            )
+
+            quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+            
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                max_memory={0: '80GIB'},
+                quantization_config=quantization_config,
+                device_map="auto"
+            )
+            
+            self.token_limit = 2048  # DeepSeek-R1 default context length[3]
+        elif 'gemma' in model_name.lower():
+            # Support for Gemma models
+            if model_name.endswith('-8bit'):
+                kwargs = {'quantization_config': BitsAndBytesConfig(load_in_8bit=True)}
+                model_name = model_name[:-len('-8bit')]
+            elif model_name.endswith('-4bit'):
+                kwargs = {'quantization_config': BitsAndBytesConfig(load_in_4bit=True)}
+                model_name = model_name[:-len('-4bit')]
+            else:
+                kwargs = {}
+
+            # Gemma models are hosted under 'google' on Hugging Face Hub
+            model_id = f'google/{model_name}'
+
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                model_id, device_map='auto', token_type_ids=None, clean_up_tokenization_spaces=False
+            )
+
+            quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+            
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                max_memory={0: '80GIB'},
+                quantization_config=quantization_config,
+                device_map="auto"
+            )
+            
+            self.token_limit = 2048
         else:
             raise ValueError
 
