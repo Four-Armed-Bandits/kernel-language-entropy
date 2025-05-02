@@ -1,20 +1,21 @@
 {
   "os": "Linux-6.8.0-49-generic-x86_64-with-glibc2.31",
   "python": "CPython 3.11.11",
-  "startedAt": "2025-04-24T18:57:32.385451Z",
+  "startedAt": "2025-04-30T13:01:00.166466Z",
   "args": [
     "--num_samples=20",
+    "--num_eval_samples=20",
+    "--num_test_samples=20",
     "--model_name=Llama-3.2-1B",
     "--dataset=svamp",
-    "--num_generations=10",
-    "--no-analyze_run",
+    "--num_generations=20",
     "--no-get_training_set_generations_most_likely_only"
   ],
   "program": "/data/arush/kernel-language-entropy/semantic_uncertainty/generate_answers.py",
   "codePath": "semantic_uncertainty/generate_answers.py",
   "git": {
     "remote": "https://github.com/Four-Armed-Bandits/kernel-language-entropy",
-    "commit": "e24441a1d421a4ce6631cc7600c3117e4285361e"
+    "commit": "172b60bccc026527e1fe474d27b5ac55c721de5e"
   },
   "email": "arush.up@gmail.com",
   "root": "./root/uncertainty",
@@ -28,7 +29,7 @@
   "disk": {
     "/": {
       "total": "392575868928",
-      "used": "131100090368"
+      "used": "131108278272"
     }
   },
   "memory": {
